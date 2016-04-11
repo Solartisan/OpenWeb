@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.0"
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -11,7 +11,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
     buildTypes {
         release {
@@ -26,12 +26,13 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
 }
 
+version = "1.0.0"
+
 // 根节点添加
 def siteUrl = 'https://github.com/Solartisan/OpenWeb'    // project homepage
 def gitUrl = 'https://github.com/Solartisan/OpenWeb.git' // project git
 
 group = "cc.solart"
-
 
 install {
     repositories.mavenInstaller {
@@ -89,11 +90,11 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
     user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    key = properties.getProperty("bintray.key")
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "openweb"                                                 // #CONFIG# project name in jcenter
+        name = "android-openweb"                                                 // #CONFIG# project name in jcenter
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

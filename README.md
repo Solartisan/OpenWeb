@@ -8,7 +8,7 @@ Gradle
 ```
 dependencies {
     ...
-    compile 'cc.solart:openweb:0.1.0'
+    compile 'cc.solart:openweb:1.0.0'
 }
 ```
 

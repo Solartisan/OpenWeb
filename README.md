@@ -2,6 +2,9 @@ OpenWeb project
 ===============
 
 Help you build a web framework quickly.
+It can manages the BackForward stack automatically.
+
+<img src="./preview/openweb.gif">
 
 Gradle
 ------
@@ -21,6 +24,7 @@ public class MyOpenWebFragment extends OpenWebFragment {
 
     /**
      * if you need pull to refresh, you can coding like this, otherwise return null.
+     * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.
      * @return
      */
     @Override
@@ -78,10 +82,12 @@ public class MyOpenWebFragment extends OpenWebFragment {
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <cc.solart.openweb.widget.OpenWebLayout
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:progressHeight="3dp"
+                    app:progressDrawable="@drawable/bg_progress_horizontal"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -92,7 +98,9 @@ Changelog
 ---------
 * **1.0.0**
     * Initial release
-
+* **1.1.0**
+    * Add OpenWebLayout widget, instead of WebView
+    
 License
 -------
 

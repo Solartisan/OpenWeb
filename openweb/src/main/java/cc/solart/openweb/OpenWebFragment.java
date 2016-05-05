@@ -47,7 +47,7 @@ public abstract class OpenWebFragment extends BaseWebFragment {
 
 
     private WebFragmentHandler mHandler = new WebFragmentHandler(this);
-    private ProgressBar mProgressBar;
+
 
     private String backPressedCallback;
     private String topBackCallback;
@@ -87,20 +87,15 @@ public abstract class OpenWebFragment extends BaseWebFragment {
     }
 
 
-    protected abstract OnRefreshStatusListener getOnRefreshStatusListener();
+    protected OnRefreshStatusListener getOnRefreshStatusListener(){
+        return null;
+    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        mProgressBar = (ProgressBar) LayoutInflater.from(mActivity).inflate(R.layout.openweb_progressbar,null);
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.d_6));
-        mProgressBar.setLayoutParams(lp);
-        mProgressBar.setIndeterminate(false);
-        if(view instanceof ViewGroup){
-            ((ViewGroup)view).addView(mProgressBar);
-        }
         return view;
     }
 
@@ -203,7 +198,7 @@ public abstract class OpenWebFragment extends BaseWebFragment {
                 return mWebView.getUrl();
             }
         });
-        this.mWebView.addJavascriptInterface(this.mWebEvent, "YulorePage");
+        this.mWebView.addJavascriptInterface(this.mWebEvent, "MyJsBridge");
     }
 
     @Override
@@ -331,7 +326,7 @@ public abstract class OpenWebFragment extends BaseWebFragment {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            if (getOnRefreshStatusListener()!=null && !getOnRefreshStatusListener().isRefreshing()) {
+            if (getOnRefreshStatusListener() == null || (getOnRefreshStatusListener() !=null && !getOnRefreshStatusListener().isRefreshing())) {
                 mProgressBar.setProgress(newProgress);
             }
 

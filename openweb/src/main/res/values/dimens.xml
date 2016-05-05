@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="d_6">6dp</dimen>
+    <dimen name="dp_progress_height">3dp</dimen>
 </resources>

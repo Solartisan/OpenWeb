@@ -18,11 +18,13 @@ import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import cc.solart.openweb.utils.Logger;
 import cc.solart.openweb.utils.NetworkUtil;
 import cc.solart.openweb.utils.ObjEnsureUtil;
 import cc.solart.openweb.utils.WebSettingsUtil;
+import cc.solart.openweb.widget.OpenWebLayout;
 
 
 /**
@@ -33,6 +35,7 @@ public abstract class BaseWebFragment extends Fragment {
     protected static final String BLANK_SCREEN_URL = "about:blank";
     protected BaseWebEvent mWebEvent;
     protected WebView mWebView;
+    protected ProgressBar mProgressBar;
     protected boolean mNetworkConnected;
     private NetworkConnectivityReceiver mNetworkConnectivityReceiver;
 
@@ -77,10 +80,13 @@ public abstract class BaseWebFragment extends Fragment {
             throw new IllegalArgumentException("You must provide a valid category_more");
         View view = inflater.inflate(i, container, false);
 
-        mWebView = (WebView) view.findViewById(getWebViewId());
-        if (mWebView == null)
-            throw new IllegalArgumentException("As a web view fragment, you must provide a webview named browser");
+        OpenWebLayout openWebLayout = (OpenWebLayout) view.findViewById(getWebViewId());
+        if (openWebLayout == null)
+            throw new IllegalArgumentException("As a web view fragment, you must provide a OpenWebLayout");
 
+        mWebView = openWebLayout.getWebView();
+
+        mProgressBar = openWebLayout.getProgressBar();
         onInitWebViewSettings();
         return view;
     }

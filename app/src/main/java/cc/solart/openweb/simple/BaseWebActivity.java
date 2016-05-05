@@ -57,7 +57,7 @@ public abstract class BaseWebActivity extends BaseActivity {
             this.mWebFragment.loadUrl(this.mUrl);
             return;
         }
-        this.mWebFragment.loadUrl("http://www.baidu.com");
+        this.mWebFragment.loadUrl("http://news.163.com/");
     }
 
     protected boolean parseIntent(Intent intent) {
@@ -73,7 +73,7 @@ public abstract class BaseWebActivity extends BaseActivity {
         }
 
         if (TextUtils.isEmpty(this.mUrl)) {
-            Logger.e("BaseWebActivity", "url should not be null");
+            Logger.e(TAG, "url should not be null");
             return false;
         }
         return true;

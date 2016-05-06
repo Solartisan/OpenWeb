@@ -87,6 +87,13 @@ public abstract class OpenWebFragment extends BaseWebFragment {
     }
 
 
+    /**
+     * if you need pull to refresh, you can coding like this, otherwise return null.
+     * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.
+     * You can also disable and enable the pull to refresh to circumvent this problem by JavaScript
+     * override {@link #enablePullToRefresh()} and {@link #disablePullToRefresh()}
+     * @return
+     */
     protected OnRefreshStatusListener getOnRefreshStatusListener(){
         return null;
     }

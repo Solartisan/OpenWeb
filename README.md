@@ -11,7 +11,7 @@ Gradle
 ```
 dependencies {
     ...
-    compile 'cc.solart:openweb:1.0.0'
+    compile 'cc.solart:openweb:1.1.0'
 }
 ```
 
@@ -25,6 +25,7 @@ public class MyOpenWebFragment extends OpenWebFragment {
     /**
      * if you need pull to refresh, you can coding like this, otherwise return null.
      * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.
+     * You can also disable and open the drop-down refresh to circumvent this problem by JavaScript
      * @return
      */
     @Override

@@ -76,35 +76,6 @@ public abstract class BaseActivity extends AppCompatActivity{
         super.onAttachFragment(fragment);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Logger.d(TAG, "onStart " + this.toString());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Logger.i(TAG, "onResume " + this.toString());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Logger.i(TAG, "onPause " + this.toString());
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Logger.d(TAG, "onStop " + this.toString());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Logger.d(TAG, "onDestroy " + this.toString());
-    }
 
     /**
      * 初始化ActionBar called onCreate(Bundle);

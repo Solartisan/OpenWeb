@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import cc.solart.openweb.OnRefreshStatusListener;
 import cc.solart.openweb.OpenWebFragment;
 import cc.solart.openweb.simple.R;
+import cc.solart.openweb.widget.OpenWebLayout;
 
 /**
  * -------------------------------------------------------------------------
@@ -28,7 +29,6 @@ public class MyOpenWebFragment extends OpenWebFragment {
 
     /**
      * if you need pull to refresh, you can coding like this, otherwise return null.
-     * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.
      * You can also disable and enable the pull to refresh to circumvent this problem by JavaScript
      * override {@link #enablePullToRefresh()} and {@link #disablePullToRefresh()}
      * @return
@@ -54,14 +54,14 @@ public class MyOpenWebFragment extends OpenWebFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  super.onCreateView(inflater, container, savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        OpenWebLayout webLayout = (OpenWebLayout) view.findViewById(R.id.webview);
+        webLayout.setRefreshView(mSwipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mWebView.reload();
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-        mSwipeRefreshLayout.setEnabled(false);
         return view;
     }
 

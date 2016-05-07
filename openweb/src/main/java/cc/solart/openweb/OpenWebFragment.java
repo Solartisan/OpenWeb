@@ -277,7 +277,7 @@ public abstract class OpenWebFragment extends BaseWebFragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (getOnRefreshStatusListener()!=null && !getOnRefreshStatusListener().isRefreshing()) {
+            if (getOnRefreshStatusListener()!=null && getOnRefreshStatusListener().isRefreshing()) {
                 getOnRefreshStatusListener().refreshComplete();
             }
             if (mProgressBar.getVisibility() == View.VISIBLE) {

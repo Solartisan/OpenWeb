@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -24,18 +23,31 @@ import cc.solart.openweb.R;
  * -------------------------------------------------------------------------
  * Changes:
  * -------------------------------------------------------------------------
- * 14 : Create by imilk
+ * 14: Create by imilk
  * -------------------------------------------------------------------------
  */
-public class OpenWebLayout extends FrameLayout{
+public class OpenWebLayout extends FrameLayout {
 
     private ProgressBar mProgressBar;
-    private WebView mWebView;
+    private OpenWebView mWebView;
     private int mProgressHeight;
     private Drawable mProgressDrawable;
+    private ViewGroup mRefreshView;
+    private OpenWebView.OnWebScrollListener mOnWebScrollListener = new OpenWebView.OnWebScrollListener() {
+        @Override
+        public void onScrollChanged(int l, int t, int oldl, int oldt) {
+            if (mRefreshView != null) {
+                if (mWebView.getScrollY() == 0) {
+                    mRefreshView.setEnabled(true);
+                } else {
+                    mRefreshView.setEnabled(false);
+                }
+            }
+        }
+    };
 
     public OpenWebLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public OpenWebLayout(Context context, AttributeSet attrs) {
@@ -47,7 +59,7 @@ public class OpenWebLayout extends FrameLayout{
 
         inflate(context, R.layout.open_web_layout, this);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.OpenWebLayout);
-        mProgressHeight = ta.getDimensionPixelOffset(R.styleable.OpenWebLayout_progressHeight,context.getResources().getDimensionPixelOffset(R.dimen.dp_progress_height));
+        mProgressHeight = ta.getDimensionPixelOffset(R.styleable.OpenWebLayout_progressHeight, context.getResources().getDimensionPixelOffset(R.dimen.dp_progress_height));
         mProgressDrawable = ta.getDrawable(R.styleable.OpenWebLayout_progressDrawable);
         ta.recycle();
     }
@@ -55,26 +67,27 @@ public class OpenWebLayout extends FrameLayout{
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mWebView = (WebView) findViewById(R.id.open_webview);
+        mWebView = (OpenWebView) findViewById(R.id.open_webview);
+        mWebView.setOnWebScrollListener(mOnWebScrollListener);
         mProgressBar = (ProgressBar) findViewById(R.id.open_progress_bar);
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mProgressHeight);
         mProgressBar.setLayoutParams(lp);
         if (mProgressDrawable != null) {
-                if (needsTileify(mProgressDrawable) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mProgressBar.setProgressDrawableTiled(mProgressDrawable);
-                } else {
-                    mProgressBar.setProgressDrawable(mProgressDrawable);
-                }
+            if (needsTileify(mProgressDrawable) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mProgressBar.setProgressDrawableTiled(mProgressDrawable);
+            } else {
+                mProgressBar.setProgressDrawable(mProgressDrawable);
+            }
         }
         mProgressBar.setIndeterminate(false);
 
     }
 
-    public WebView getWebView(){
+    public WebView getWebView() {
         return mWebView;
     }
 
-    public ProgressBar getProgressBar(){
+    public ProgressBar getProgressBar() {
         return mProgressBar;
     }
 
@@ -99,4 +112,12 @@ public class OpenWebLayout extends FrameLayout{
         return false;
     }
 
+    public void setRefreshView(ViewGroup refreshView) {
+        mRefreshView = refreshView;
+    }
+
+
+    public void setOnWebScrollListener(OpenWebView.OnWebScrollListener listener) {
+        this.mOnWebScrollListener = listener;
+    }
 }

@@ -24,7 +24,7 @@ public class MyOpenWebFragment extends OpenWebFragment {
 
     /**
      * if you need pull to refresh, you can coding like this, otherwise return null.
-     * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.
+     * Careful use of pull down refresh, it may lead to a sliding conflict with the web page.(fixed in 1.1.1)
      * You can also disable and open the drop-down refresh to circumvent this problem by JavaScript
      * @return
      */
@@ -49,11 +49,12 @@ public class MyOpenWebFragment extends OpenWebFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  super.onCreateView(inflater, container, savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        OpenWebLayout webLayout = (OpenWebLayout) view.findViewById(R.id.webview);
+        webLayout.setRefreshView(mSwipeRefreshLayout); //add in 1.1.1
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mWebView.reload();
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
         return view;
@@ -101,6 +102,8 @@ Changelog
     * Initial release
 * **1.1.0**
     * Add OpenWebLayout widget, instead of WebView
+* **1.1.1**
+    * Fix pull to refresh conflict bug
     
 License
 -------

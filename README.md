@@ -11,7 +11,7 @@ Gradle
 ```
 dependencies {
     ...
-    compile 'cc.solart:openweb:1.1.0'
+    compile 'cc.solart:openweb:1.1.1'
 }
 ```
 
